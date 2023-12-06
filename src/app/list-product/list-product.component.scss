@@ -1,0 +1,17 @@
+.imagem-list {
+    width: 150px; 
+    height: 150px;
+    object-fit: cover; 
+  }
+
+  .imagem-grid {
+    width: 200px; 
+    height: 200px;
+    object-fit: cover; 
+  }
+  .fixed-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99; /* Garante que o botão esteja acima de outros elementos */
+}
