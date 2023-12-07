@@ -7,7 +7,7 @@ import {AddUserComponent} from '../app/add-user/add-user.component';
 
 
 const routes: Routes = [
-  { path: '', component: AppComponent , pathMatch: 'full'  },
+  { path: '',  component: ListProductComponent , pathMatch: 'full' },
   { path: 'produtos', component: ListProductComponent , pathMatch: 'full'},
   { path: 'pedidos', component: DashBoardOrdersComponent , pathMatch: 'full'},
   { path: 'usuario', component: AddUserComponent , pathMatch: 'full'},
