@@ -12,20 +12,16 @@ import { NgZone } from '@angular/core';
 
 export class DashBoardOrdersComponent implements OnInit {
   sourceProducts!: Pedidos[];
-  products: any
   targetProducts!: Product[];
-  fineshed!: Product[];
   col1Items: string[] = ['Item 1', 'Item 2', 'Item 3'];
   col2Items: string[] = [];
-  col3Items: string[] = [];
   aguardando: Pedidos[] = [];
   preparando: Pedidos[] = [];
   pronto: Pedidos[] = [];
-  teste: any;
   constructor(private DashboardPedidosService: DashboardPedidosService, private cdr: ChangeDetectorRef
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.cdr.markForCheck();
     this.targetProducts = [];
     this.DashboardPedidosService.listOrder().subscribe(value => {
@@ -67,6 +63,10 @@ export class DashBoardOrdersComponent implements OnInit {
     this.aguardando = this.sourceProducts.filter(item => item.status === 'REQUESTED');
     this.preparando = this.sourceProducts.filter(item => item.status === 'PREPARING');
     this.pronto = this.sourceProducts.filter(item => item.status === 'FINISHED');
+  }
+
+  updateAllStatus(pronto: Pedidos[]) {
+    pronto.filter(value => value.status !== "FINISHED").map(value => this.updateStatus(value.id))
   }
 }
 
