@@ -59,9 +59,8 @@ export class ListProductComponent implements OnInit {
   }
 
   addItem(description: any){
-    // this.carrinho.push(description)
-    console.log(description)
-    // this.quantidade = this.carrinho.length
+    this.carrinho.push(description)
+    this.quantidade = this.carrinho.length
   }
 
   finalizarCompra(){
@@ -76,6 +75,6 @@ export class ListProductComponent implements OnInit {
   }
 
   enviarPedido(produtos: Product[]) {
-    produtos
+    this.ItensServiceService.pedido(produtos);
   }
 }

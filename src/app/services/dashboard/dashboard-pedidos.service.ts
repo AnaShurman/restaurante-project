@@ -1,47 +1,44 @@
 import { Injectable } from '@angular/core';
+import * as SockJS from "sockjs-client";
+import * as Stomp from "stompjs";
+import {environment} from "../../../environments/environment.development";
+import {Observable} from "rxjs";
+import {Pedidos} from "./Pedidos";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardPedidosService {
 
-  constructor() { }
+  constructor(private readonly http: HttpClient) { }
 
-  public getOrders() {
-    return [
-          {
-            "id": 1,
-            "nome": "ByteBurger",
-            "numeroMesa": 6,
-            "bebidaInclusa": true,
-            "bebida":"coca-cola",
-            "comentario": "sem Cebola",
-            "image": "../../assets/amirali-mirhashemian-sc5sTPMrVfk-unsplash.jpg",
-            "status":"Preparando"
-          },
-          {
-            "id": 2,
-            "nome": "Byte Fries Fusion",
-            "numeroMesa": 7,
-            "bebidaInclusa": true,
-            "comentario": "com Bacon",
-            "bebida":"sem bebida",
-            "image": "../../assets/matthew-reyes-5I5aqYJrdso-unsplash.jpg",
-            "status":"Aguardando"
-          },
-          {
-            "id": 3,
-            "nome": "Byte Fries Fusion",
-            "numeroMesa": 7,
-            "bebidaInclusa": true,
-            "comentario": "com Bacon",
-            "bebida":"sem bebida",
-            "image": "../../assets/matthew-reyes-5I5aqYJrdso-unsplash.jpg",
-            "status":"Pronto"
-          }
-    ]
+  socket = new SockJS("http://localhost:8080/ws");
+  stompClient = Stomp.over(this.socket);
+
+  subscribe(topic: string, callback: any): void {
+    const connect: boolean = this.stompClient.connected;
+    if (connect) {
+      this.subscribeToTopic(topic, callback);
+      return;
+    }
+
+    this.stompClient.connect({}, () => {
+      this.subscribeToTopic(topic, callback);
+    })
   }
-  getProductsMini() {
-    return Promise.resolve(this.getOrders().slice(0, 5));
-}
+
+  private subscribeToTopic(topic: string, callback: any): void {
+    this.stompClient.subscribe(topic, (message): any => {
+      callback(message.body)
+    })
+  }
+
+  public listOrder(): Observable<Pedidos[]> {
+    return this.http.get<Pedidos[]>(`${environment.url}/v1/order`);
+  }
+
+  updateStatus(id: number) {
+    this.http.get(`${environment.url}/v1/order/${Number(id)}/status`).subscribe();
+  }
 }
