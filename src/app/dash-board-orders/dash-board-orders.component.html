@@ -4,53 +4,57 @@
             < codeBurger />
         </h1>
         <div class="card" style="display: inline-flex;">
-            <p-dataView #dv [value]="aguardando" header="Aguardando" layout="list" [style]="{ height: '22rem',  width: '350px' }" >
+            <p-dataView #dv [value]="aguardando" header="Aguardando" layout="list"
+                [style]="{ height: '22rem',  width: '350px' }">
                 <ng-template let-aguardando pTemplate="listItem">
                     <div class="col-12">
                         <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
-                            <img class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round imagem-list" style="width: 100px;height: 100px;" [src]="aguardando.image" [alt]="aguardando.name" />
-                            <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+                            <img class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round imagem-list"
+                                style="width: 100px;height: 100px;" [src]="aguardando.image" [alt]="aguardando.name" />
+                            <div
+                                class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
                                 <div class="flex flex-column align-items-center sm:align-items-start gap-3">
                                     <div class="text-2xl font-bold text-900">{{ aguardando.name }}
                                     </div>
-                                   Comentario: {{ aguardando.comentario }}
-        
+                                    Comentario: {{ aguardando.comentario }}
+
                                     <div class="flex align-items-center gap-3">
                                         <span class="flex align-items-center gap-2">
                                             <i class="pi pi-tag"></i>
                                             <span class="font-semibold">Mesa {{ aguardando.numeroMesa }}</span>
                                         </span>
                                     </div>
-    
+
                                 </div>
                             </div>
                             <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                                <button pButton icon="pi pi-times" class="md:align-self-end mb-2 p-button-rounded"  (click)="preparar(aguardando)"></button>
+                                <button pButton icon="pi pi-times" class="md:align-self-end mb-2 p-button-rounded"
+                                    (click)="preparar(aguardando)"></button>
                             </div>
                         </div>
                     </div>
                 </ng-template>
             </p-dataView>
-            <!-- Primeiro p-pickList -->
+            <!-- p-pickList -->
             <p-pickList [source]="preparando" [target]="pronto" sourceHeader="Preparando" targetHeader="Pronto"
-            [dragdrop]="true" [responsive]="true" [sourceStyle]="{ height: '22rem', width: '350px' }"
-            [targetStyle]="{ height: '22rem',  width: '350px' }" filterBy="name" sourceFilterPlaceholder="Search by name"
-            targetFilterPlaceholder="Search by name" breakpoint="1400px">
-            <ng-template let-product pTemplate="item">
-                <div class="flex flex-wrap p-2 align-items-center gap-3">
-                    <img class="w-4rem shadow-2 flex-shrink-0 border-round" src="{{ product.image }}"
-                        alt="{item.name}" style="width: 100px;height: 100px;" />
-                    <div class="flex-1 flex flex-column gap-2">
-                        <span class="font-bold">#{{ product.id }},{{ product.nome }},{{ product.bebida }} </span>
-                        <div class="flex align-products-center gap-2">
-                            <i class="pi pi-tag text-sm"></i>
-                            <span>{{ product.comentario }}</span>
+                [dragdrop]="true" [responsive]="true" [sourceStyle]="{ height: '22rem', width: '350px' }"
+                [targetStyle]="{ height: '22rem', width: '350px' }" filterBy="name"
+                sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name" breakpoint="1400px">
+                <ng-template let-product pTemplate="item">
+                    <div class="flex flex-wrap p-2 align-items-center gap-3">
+                        <img class="w-4rem shadow-2 flex-shrink-0 border-round" src="{{ product.image }}"
+                            alt="{item.name}" style="width: 100px;height: 100px;" />
+                        <div class="flex-1 flex flex-column gap-2">
+                            <span class="font-bold">#{{ product.id }},{{ product.nome }},{{ product.bebida }} </span>
+                            <div class="flex align-products-center gap-2">
+                                <i class="pi pi-tag text-sm"></i>
+                                <span>{{ product.comentario }}</span>
+                            </div>
                         </div>
+                        <span class="font-bold text-900">{{ 'Mesa ' + product.numeroMesa }}</span>
                     </div>
-                    <span class="font-bold text-900">{{ 'Mesa ' + product.numeroMesa }}</span>
-                </div>
-            </ng-template>
-        </p-pickList>
+                </ng-template>
+            </p-pickList>
         </div>
     </ng-template>
 </p-panel>
