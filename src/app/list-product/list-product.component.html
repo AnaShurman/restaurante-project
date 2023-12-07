@@ -74,7 +74,7 @@
                                 <div class="text-2xl font-bold text-900">{{ carrinho.name }}
                                 </div>
                                 {{ carrinho.descricao }}
-    
+
                                 <div class="flex align-items-center gap-3">
                                     <span class="flex align-items-center gap-2">
                                         <i class="pi pi-tag"></i>
@@ -92,7 +92,7 @@
             </ng-template>
         </p-dataView>
         <div class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2 mt-auto">
-            <p-button label="Fazer Pedido"></p-button>
+            <p-button label="Fazer Pedido" (click)="enviarPedido(carrinho)"></p-button>
         </div>
     </ng-container>
     <ng-template #emptyCarrinho>
@@ -105,7 +105,7 @@
         <p-image [src]="description.image" alt="Image" width="300" height="250"
         [preview]="true"></p-image>
     </div>
-    
+
     <div class="text-2xl font-bold text-900">{{ description.name }}</div>
     <textarea rows="5" cols="76" pInputTextarea [(ngModel)]="description.descricao" [disabled]="true"></textarea>
     <div class="flex align-items-center justify-content-between">

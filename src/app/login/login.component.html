@@ -1,0 +1,12 @@
+<div
+  style="border-radius: 20px; padding: 100px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); border: 5px solid black">
+  <span class="p-float-label">
+      <input class="p-inputtext-lg" id="username" pInputText [(ngModel)]="usuario"/>
+      <label for="username">Username</label>
+  </span>
+  <span class="p-float-label" style="margin-top: 30px;">
+      <input class="p-inputtext-lg" id="password" pInputText [(ngModel)]="senha"/>
+      <label for="username">Password</label>
+  </span>
+  <button pButton style="margin-top: 10px; width: 100%; text-align: center; display: block!important;" (click)="login()">Entrar</button>
+</div>

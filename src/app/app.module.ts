@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -92,13 +92,16 @@ import { AppComponent } from './app.component';
 import { ListProductComponent } from './list-product/list-product.component';
 import { DashBoardOrdersComponent } from './dash-board-orders/dash-board-orders.component';
 import { AddUserComponent } from './add-user/add-user.component';
+import { LoginComponent } from './login/login.component';
+import {TokenInterceptor} from "./interceptor/token.interceptor";
 
 @NgModule({
   declarations: [
     AppComponent,
     ListProductComponent,
     DashBoardOrdersComponent,
-    AddUserComponent
+    AddUserComponent,
+    LoginComponent
   ],
   imports: [
     AvatarModule,
@@ -189,7 +192,13 @@ import { AddUserComponent } from './add-user/add-user.component';
     CardModule,
     RouterModule.forRoot([]),
     AppRoutingModule,],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

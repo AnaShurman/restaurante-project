@@ -11,14 +11,14 @@ import {Product} from "../services/product"
 export class ListProductComponent implements OnInit {
   layout: any = 'grid';
   items: any[] | undefined;
-  product: any;
+  product: Product[] = [];
   sortField: string = 'lanches';
   visible: boolean = false;
   description: any;
   carrinho: Product[] = [];
   quantidade: number = 0;
   finalizar: boolean= false;
-
+  todosOsItens: Product[] = [];
 
 
   constructor(private ItensServiceService: ItensServiceService) { }
@@ -30,7 +30,10 @@ export class ListProductComponent implements OnInit {
       { label: 'Bebidas' },
       { label: 'Sobremesas' }
     ];
-    this.product = this.ItensServiceService.getLanches();
+    this.ItensServiceService.getLanches().subscribe(value => {
+      this.product = value.content;
+      this.todosOsItens = value.content;
+    });
   }
 
   showDialog(product: any) {
@@ -39,28 +42,26 @@ export class ListProductComponent implements OnInit {
     this.visible = true;
   }
   teste(itens: any) {
-    const todosOsItens = this.ItensServiceService.getLanches();
-
     if (itens.target.innerText === 'Entradas') {
-      this.product = todosOsItens.filter(item => item.category === 'Entradas')
+      this.product = this.todosOsItens.filter(item => item.category === 'Entradas')
     }
     if (itens.target.innerText === 'Lanches') {
-      this.product = todosOsItens.filter(item => item.category === 'Lanches')
+      this.product = this.todosOsItens.filter(item => item.category === 'Lanches')
     }
 
     if (itens.target.innerText === 'Bebidas') {
-      this.product = todosOsItens.filter(item => item.category === 'Bebidas')
+      this.product = this.todosOsItens.filter(item => item.category === 'Bebidas')
     }
     if (itens.target.innerText === 'Sobremesas') {
-      this.product = todosOsItens.filter(item => item.category === 'Sobremesas')
+      this.product = this.todosOsItens.filter(item => item.category === 'Sobremesas')
     }
 
   }
 
   addItem(description: any){
-    this.carrinho.push(description)
-    console.log(this.carrinho)
-    this.quantidade = this.carrinho.length
+    // this.carrinho.push(description)
+    console.log(description)
+    // this.quantidade = this.carrinho.length
   }
 
   finalizarCompra(){
@@ -72,5 +73,9 @@ export class ListProductComponent implements OnInit {
     console.log(carrinho)
     this.carrinho = this.carrinho.filter(item => item !== carrinho);
 
+  }
+
+  enviarPedido(produtos: Product[]) {
+    produtos
   }
 }
